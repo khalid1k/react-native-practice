@@ -1,61 +1,76 @@
-import 'react-native-gesture-handler'
 import { View, StyleSheet, Button, Text } from 'react-native'
 import React from 'react'
 import { NavigationContainer } from '@react-navigation/native'
-import { createDrawerNavigator } from '@react-navigation/drawer'
+import {createBottomTabNavigator} from '@react-navigation/bottom-tabs'
+import Ionicons from 'react-native-vector-icons/Ionicons';
+const Tab = createBottomTabNavigator()
 
-const Drawer = createDrawerNavigator();
 
 const HomeScreen = ({navigation}) => {
   return(
-    <View>
-      <Text>Home Screen</Text>
-      <Button title='Open the drawer' onPress={() => navigation.openDrawer() }/>
+    <View style={styles.container}>
+      <Text style = {styles.TextSyle}>Home Screen</Text>
     </View>
   )
 }
 
 const ProfileScreen = ({navigation}) => {
   return(
-    <View>
-      <Text>Profile Screen</Text>
-      <Button title='Open the drawer' onPress={() => navigation.openDrawer() }/>
+    <View style={styles.container}>
+      <Text style = {styles.TextSyle}>Profile Screen</Text>
     </View>
   )
 }
 
 const SettingsScreen = ({navigation}) => {
   return(
-    <View>
-      <Text>Settings Screen</Text>
-      <Button title='Open the drawer' onPress={() => navigation.openDrawer() }/>
+    <View style={styles.container}>
+      <Text style = {styles.TextSyle}>Settings Screen</Text>
     </View>
   )
 }
-
+const getTabBarIcon = (routName, focused, color, size) => {
+  let iconName;
+  if(routName === 'Home'){
+    iconName = focused ? 'home' : 'home-outline'
+  }else if(routName === 'Profile'){
+    iconName = focused ? 'person' : 'person-outline'
+  }else if(routName === 'Settings'){
+    iconName = focused ? 'settings' : 'settings-outline'
+  }
+  return <Ionicons name={iconName} size = {size}  color= {color}/>
+}
 const App = () => {
   return (
     <NavigationContainer>
-      <Drawer.Navigator 
-        screenOptions={{
-          drawerStyle: {backgroundColor: '#e6e6e6', width: 240},
-          drawerLabelStyle: {
-            fontSize: 18,
-            color: '#333'
-          },
-          headerStyle: {
-            backgroundColor: '#06200E'
-          },
-          headerTintColor: '#fff',
-          headerTitleAlign: 'center', 
-        }}
+      <Tab.Navigator
+      screenOptions={({route}) => ({
+        tabBarIcon: ({focused, color, size}) => getTabBarIcon(route.name, focused, color, size),
+        tabBarActiveTintColor: '#007bff',
+        tabBarInactiveTintColor: 'gray',
+        height: 60
+      
+      })}
       >
-        <Drawer.Screen name='Home' component={HomeScreen}/>
-        <Drawer.Screen name='Profile' component={ProfileScreen}/>
-        <Drawer.Screen name='Settings' component={SettingsScreen}/>
-      </Drawer.Navigator>
+        <Tab.Screen  name='Home' component={HomeScreen}/>
+      <Tab.Screen name='Profile' component={ProfileScreen}/>
+      <Tab.Screen name='Settings' component={SettingsScreen}/>
+      </Tab.Navigator>
     </NavigationContainer>
   )
 }
 
 export default App
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: 'orange'
+  },
+  TextSyle: {
+    fontWeight: 'bold',
+    color: '#fff'
+  }
+})
