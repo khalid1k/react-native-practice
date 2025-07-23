@@ -1,44 +1,61 @@
-import { View, StyleSheet} from 'react-native'
+import 'react-native-gesture-handler'
+import { View, StyleSheet, Button, Text } from 'react-native'
 import React from 'react'
-import SignUpForm from './src/components/signUpForm'
 import { NavigationContainer } from '@react-navigation/native'
-import { createNativeStackNavigator } from '@react-navigation/native-stack'
-import Home from './src/screens/navigationScreens/home'
-import About from './src/screens/navigationScreens/about'
-import Login from './src/screens/navigationScreens/login'
+import { createDrawerNavigator } from '@react-navigation/drawer'
 
-const stack = createNativeStackNavigator();
+const Drawer = createDrawerNavigator();
+
+const HomeScreen = ({navigation}) => {
+  return(
+    <View>
+      <Text>Home Screen</Text>
+      <Button title='Open the drawer' onPress={() => navigation.openDrawer() }/>
+    </View>
+  )
+}
+
+const ProfileScreen = ({navigation}) => {
+  return(
+    <View>
+      <Text>Profile Screen</Text>
+      <Button title='Open the drawer' onPress={() => navigation.openDrawer() }/>
+    </View>
+  )
+}
+
+const SettingsScreen = ({navigation}) => {
+  return(
+    <View>
+      <Text>Settings Screen</Text>
+      <Button title='Open the drawer' onPress={() => navigation.openDrawer() }/>
+    </View>
+  )
+}
 
 const App = () => {
   return (
     <NavigationContainer>
-      <stack.Navigator screenOptions={{headerStyle: styles.header, headerTitleStyle: styles.headerTitle , headerTintColor: '#fff', contentStyle: styles.screen}}>
-        <stack.Screen name='Login' component={Login} />
-        <stack.Screen name="Home" component={Home}/>
-        <stack.Screen name='About' component={About}/>
-      </stack.Navigator>
+      <Drawer.Navigator 
+        screenOptions={{
+          drawerStyle: {backgroundColor: '#e6e6e6', width: 240},
+          drawerLabelStyle: {
+            fontSize: 18,
+            color: '#333'
+          },
+          headerStyle: {
+            backgroundColor: '#06200E'
+          },
+          headerTintColor: '#fff',
+          headerTitleAlign: 'center', 
+        }}
+      >
+        <Drawer.Screen name='Home' component={HomeScreen}/>
+        <Drawer.Screen name='Profile' component={ProfileScreen}/>
+        <Drawer.Screen name='Settings' component={SettingsScreen}/>
+      </Drawer.Navigator>
     </NavigationContainer>
   )
 }
 
-
 export default App
-
-
-
-const styles = StyleSheet.create({
-    header: {
-        backgroundColor: '#6200EE',
-    },
-    headerTitle: {
-        fontWeight: 'bold',
-        fontSize: 26,
-        color: '#fff'
-    },
-    screen: {
-        backgroundColor: 'lightgreen'
-    },
-    headerTintColor: {
-      color: '#fff'
-    }
-})
