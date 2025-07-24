@@ -1,9 +1,8 @@
 import { View, StyleSheet, Button, Text } from 'react-native'
 import React from 'react'
 import { NavigationContainer } from '@react-navigation/native'
-import {createBottomTabNavigator} from '@react-navigation/bottom-tabs'
-import Ionicons from 'react-native-vector-icons/Ionicons';
-const Tab = createBottomTabNavigator()
+import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
+const Tab = createMaterialTopTabNavigator();
 
 
 const HomeScreen = ({navigation}) => {
@@ -29,29 +28,24 @@ const SettingsScreen = ({navigation}) => {
     </View>
   )
 }
-const getTabBarIcon = (routName, focused, color, size) => {
-  let iconName;
-  if(routName === 'Home'){
-    iconName = focused ? 'home' : 'home-outline'
-  }else if(routName === 'Profile'){
-    iconName = focused ? 'person' : 'person-outline'
-  }else if(routName === 'Settings'){
-    iconName = focused ? 'settings' : 'settings-outline'
-  }
-  return <Ionicons name={iconName} size = {size}  color= {color}/>
-}
 const App = () => {
   return (
     <NavigationContainer>
-      <Tab.Navigator
-      screenOptions={({route}) => ({
-        tabBarIcon: ({focused, color, size}) => getTabBarIcon(route.name, focused, color, size),
-        tabBarActiveTintColor: '#007bff',
-        tabBarInactiveTintColor: 'gray',
-        height: 60
-      
-      })}
-      >
+      <Tab.Navigator screenOptions = {
+        {
+          tabBarActiveTintColor: '#007bff',
+          tabBarInactiveTintColor: 'grey',
+          tabBarStyle: {backgroundColor: '#fff'},
+          tabBarIndicatorStyle: {
+            backgroundColor: '#007bff',
+            height: 3,
+          },
+          tabBarLabelStyle: {
+            fontSize: 16,
+
+          }
+        }
+      }>
         <Tab.Screen  name='Home' component={HomeScreen}/>
       <Tab.Screen name='Profile' component={ProfileScreen}/>
       <Tab.Screen name='Settings' component={SettingsScreen}/>
